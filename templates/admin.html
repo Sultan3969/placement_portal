@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        form {
+            margin-bottom: 30px;
+            padding: 24px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: #ffffff;
+            width: 420px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #219150;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            margin: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+            margin-left: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .company-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .company-section {
+            flex: 1 1 320px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.07);
+            min-width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .company-section:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 38px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-section h3 {
+            margin: 0;
+            padding: 18px;
+            font-size: 18px;
+            color: white;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .company-section ul {
+            padding: 20px;
+        }
+
+        .technical-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .nontechnical-header {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .top-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .logout-link {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            font-weight: bold;
+            color: #c0392b;
+        }
+
+        .notification-panel {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.07);
+            margin: 20px auto 30px;
+            padding: 20px;
+        }
+
+        .notification-panel h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .notification-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .notification-list li {
+            padding: 12px 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        .notification-list li:last-child {
+            border-bottom: none;
+        }
+
+        .requirements-column {
+            margin-top: 8px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            color: #374151;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .requirements-form {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .requirements-form textarea {
+            min-height: 70px;
+            margin-bottom: 8px;
+        }
+
+        .save-btn {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: auto;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <a class="top-link" href="/">← Back to Home</a>
+
+        <h2>Welcome Admin</h2>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+        <form method="POST">
+            <label>Company Name:</label>
+            <input type="text" name="company" required>
+
+            <label>Date (YYYY-MM-DD):</label>
+            <input type="text" name="date" required>
+
+            <label>Category:</label>
+            <select name="category">
+                <option value="technical">Technical</option>
+                <option value="non-technical">Non-Technical</option>
+            </select>
+
+            <label>Company Requirements:</label>
+            <textarea name="requirements" placeholder="Example:&#10;CGPA: >= 7.5&#10;Skills: DSA, Java&#10;Rounds: Aptitude, Technical, HR"></textarea>
+
+            <input type="submit" value="Add Company">
+        </form>
+
+        <div class="notification-panel">
+            <h3>📢 Student Applications</h3>
+            {% if applications %}
+                <ul class="notification-list">
+                    {% for item in applications %}
+                        <li>
+                            <strong>{{ item.student }}</strong> applied for <strong>{{ item.company }}</strong>
+                            ({{ item.category }}) on {{ item.applied_at }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No student applications yet.</p>
+            {% endif %}
+        </div>
+
+        <div class="company-wrapper">
+            <div class="company-section">
+                <h3 class="technical-header">📘 Technical Companies</h3>
+                <ul>
+                    {% for company in technical %}
+                        <li>
+                            <div>
+                                <div><strong>{{ company.name }}</strong> - {{ company.date }}</div>
+                                <div class="requirements-column">
+                                    <strong>Requirements:</strong>
+                                    {% if company.requirements is mapping %}
+                                        {% for key, value in company.requirements.items() %}
+                                            <div>{{ key }}: {{ value }}</div>
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ company.requirements }}
+                                    {% endif %}
+                                </div>
+                                <form class="requirements-form" method="POST">
+                                    <input type="hidden" name="action" value="update_requirements">
+                                    <input type="hidden" name="company_name" value="{{ company.name }}">
+                                    <input type="hidden" name="category" value="technical">
+                                    <textarea name="requirements" placeholder="Update requirements...">{% if company.requirements is mapping %}{% for key, value in company.requirements.items() %}{{ key }}: {{ value }}{% if not loop.last %}\n{% endif %}{% endfor %}{% else %}{{ company.requirements }}{% endif %}</textarea>
+                                    <button class="save-btn" type="submit">Save Requirements</button>
+                                </form>
+                            </div>
+                            <a class="delete-btn" href="{{ url_for('admin_dashboard') }}?type=technical&index={{ loop.index0 }}">❌</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="company-section">
+                <h3 class="nontechnical-header">📙 Non-Technical Companies</h3>
+                <ul>
+                    {% for company in nontechnical %}
+                        <li>
+                            <div>
+                                <div><strong>{{ company.name }}</strong> - {{ company.date }}</div>
+                                <div class="requirements-column">
+                                    <strong>Requirements:</strong>
+                                    {% if company.requirements is mapping %}
+                                        {% for key, value in company.requirements.items() %}
+                                            <div>{{ key }}: {{ value }}</div>
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ company.requirements }}
+                                    {% endif %}
+                                </div>
+                                <form class="requirements-form" method="POST">
+                                    <input type="hidden" name="action" value="update_requirements">
+                                    <input type="hidden" name="company_name" value="{{ company.name }}">
+                                    <input type="hidden" name="category" value="nontechnical">
+                                    <textarea name="requirements" placeholder="Update requirements...">{% if company.requirements is mapping %}{% for key, value in company.requirements.items() %}{{ key }}: {{ value }}{% if not loop.last %}\n{% endif %}{% endfor %}{% else %}{{ company.requirements }}{% endif %}</textarea>
+                                    <button class="save-btn" type="submit">Save Requirements</button>
+                                </form>
+                            </div>
+                            <a class="delete-btn" href="{{ url_for('admin_dashboard') }}?type=nontechnical&index={{ loop.index0 }}">❌</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <a class="logout-link" href="/admin-logout">Logout</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>Error</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<a href="/student">← Back to Login</a>
+
+<body>
+    <h3 style="color: red;">{{ message }}</h3>
+    <a href="/student">Try Again</a>
+</body>
+</html>
